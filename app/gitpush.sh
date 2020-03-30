@@ -14,7 +14,7 @@ function display_split_line()
 	fi
 	local i=0
 	local total=118
-	local arglen=$(expr length "$*")
+	local arglen=$(expr length "$1")
 	local len=$(($total - $arglen))
 	local reset=$(($len % 2))
 	
@@ -30,7 +30,7 @@ function display_split_line()
 	do
 		echo -n "#"
 	done
-	echo -en "\033[31;1m $* \033[0m"
+	echo -en "\033[31;1m $1 \033[0m"
 	for ((i=0 ;i < $len2; i++))
 	do
 		echo -n "#"
