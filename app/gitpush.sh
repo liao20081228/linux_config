@@ -161,13 +161,13 @@ then
 		git remote set-url --add $hostname git@gitee.com:liao20081228/$temp.git 
 	fi
 	if [ -z "$(echo $(git remote -v) | grep github.com)" ]
-	then 
+	then
 		git remote set-url --add $hostname git@github.com:liao20081228/$temp.git 
 	fi
-	if [ -z "$(echo $(git remote -v) | grep gitlab.com)" ]
-	then 
-		git remote set-url --add $hostname git@gitlab.com:liao20081228/$temp.git 
-	fi
+	#if [ -z "$(echo $(git remote -v) | grep gitlab.com)" ]
+	#then 
+		#git remote set-url --add $hostname git@gitlab.com:liao20081228/$temp.git 
+	#fi
 fi
 
 git push $hostname $localbranchname:$remotebranchname
