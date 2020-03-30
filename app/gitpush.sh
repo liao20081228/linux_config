@@ -10,7 +10,7 @@ function display_split_line()
 	if [ ! "$2" ]
 	then
 		echo -e "\033[31;1m $1 \033[0m"
-		return 0 
+		return 0
 	fi
 	local i=0
 	local total=118
@@ -46,14 +46,14 @@ then
 
 else
 	gitdir=$1
-	if [ $1=. ]
+	if [ "$1" == "." ]
 	then
 		gitdir=$PWD
 	fi
 fi
 
 if [ -d $gitdir ]
-then 
+then
 	cd $gitdir
 	if [ ! -d ./.git ]
 	then
@@ -109,7 +109,7 @@ fi
 
 display_split_line "commit the files in cache to current local repository"
 read -p "use the custom comments?(default: no)" -t 7 COND
-echo 
+echo
 if [ ! $COND ]
 then
        COND="no"
