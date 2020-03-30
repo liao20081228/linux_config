@@ -133,10 +133,10 @@ let g:ycm_key_list_select_completion=['<Down>']
 let g:ycm_key_list_previous_completion=['<Up>']
 
 "配置ycm的全局路径，避免每次都复制到当前目录.若为空则每次都需赋值文件到当前目录                                                          
-autocmd FileType  c let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_extra_conf_c.py'
-autocmd FileType cpp,python let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_extra_conf_cpp.py'
+autocmd FileType  c let g:ycm_global_ycm_extra_conf="$HOME/Downloads/linux_config/ycm_files/ycm_extra_conf_c.py"
+autocmd FileType cpp,python let g:ycm_global_ycm_extra_conf="$HOME/Downloads/linux_config/ycm_files/ycm_extra_conf_cpp.py"
 
-" 允许自动加载.ycm_extra_conf.py，不再提示，设置为1，则每次都提示用于确认该文件是否安全
+"允许自动加载.ycm_extra_conf.py，不再提示，设置为1，则每次都提示用于确认该文件是否安全
 let g:ycm_confirm_extra_conf=0 
 
 "设置运行jedi库的python解释器

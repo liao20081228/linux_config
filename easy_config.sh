@@ -204,7 +204,7 @@ cmd="git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.
 	ln -sf $CDIR/ultisnips_files/*.snippets ~/.vim/myUltiSnips;"
 one_call "$prompt" "yes" "$cmd"
 
-prompt="install vim Plugin YouCompleteMe"
+prompt="install and configure vim Plugin YouCompleteMe"
 cmd="git clone https://github.com/ycm-core/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe;
 	cd  ~/.vim/bundle/YouCompleteMe;
 	git submodule update --init --recursive;
