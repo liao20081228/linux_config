@@ -201,7 +201,7 @@ prompt="config  vim"
 cmd="git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim;
 	ln -sf  $CDIR/vimrc ~/.vimrc;
 	mkdir ~/.vim/myUltiSnips;
-	ln -sf $CDIR/ultisnips_file/*.snippets ~/.vim/myUltiSnips;"
+	ln -sf $CDIR/ultisnips_files/*.snippets ~/.vim/myUltiSnips;"
 one_call "$prompt" "yes" "$cmd"
 
 prompt="install vim Plugin YouCompleteMe"
@@ -210,8 +210,8 @@ cmd="git clone https://github.com/ycm-core/YouCompleteMe.git ~/.vim/bundle/YouCo
 	git submodule update --init --recursive;
 	python3 install.py --clang-completer;
 	cd $CDIR;
-	ln -sf  $CDIR/ycm_extra_conf_c.py ~/.vim/bundle/YouCompleteMe/third_party/ycmd;
-	ln -sf $CDIR/ycm_extra_conf_cpp.py ~/.vim/bundle/YouCompleteMe/third_party/ycmd;"
+	ln -sf  $CDIR/ycm_files/ycm_extra_conf_c.py ~/.vim/bundle/YouCompleteMe/third_party/ycmd;
+	ln -sf $CDIR/ycm_files/ycm_extra_conf_cpp.py ~/.vim/bundle/YouCompleteMe/third_party/ycmd;"
 one_call "$prompt" "yes" "$cmd"
 
 prompt="install code scan tools: cscope ctags"

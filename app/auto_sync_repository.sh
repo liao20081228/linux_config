@@ -4,7 +4,7 @@ for e in $GITDIRS
 do
 	if [ -e ~/Downloads/$e ]
 	then
-		cd ~/Downloads/linux_config
+		cd ~/Downloads/$e
 		git pull
 		/usr/local/bin/gitpush.sh
 	fi
