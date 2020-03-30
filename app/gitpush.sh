@@ -102,7 +102,7 @@ git add *
 display_split_line "get the current status of repository"
 git status
 if [ "$(git status|grep "nothing to commit, working tree clean")" ]
-then 
+then
 	display_split_line "end sync git repository: $gitdir" "yes"
 	exit 0
 fi
