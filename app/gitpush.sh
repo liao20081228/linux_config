@@ -93,6 +93,12 @@ then
 	done
 fi
 
+if [ "$(git status|grep "nothing to commit, working tree clean")" ]
+then
+	display_split_line "end sync git repository: $gitdir" "yes"
+	exit 0
+fi
+
 display_split_line "get the current status of repository"
 git status
 
@@ -101,11 +107,6 @@ git add *
 
 display_split_line "get the current status of repository"
 git status
-if [ "$(git status|grep "nothing to commit, working tree clean")" ]
-then
-	display_split_line "end sync git repository: $gitdir" "yes"
-	exit 0
-fi
 
 display_split_line "commit the files in cache to current local repository"
 read -p "use the custom comments?(default: no)" -t 7 COND
@@ -129,23 +130,23 @@ git commit --signoff -m "$comment"
 display_split_line "push local repository to remote repository"
 COND=""
 read -p "multiple remote repositories synchronization?(default: yes)" -t 7 COND
-echo 
+echo
 read -p "please input hostname pushed (default: origin):" -t 7  hostname
-echo 
+echo
 read -p "please input local branch name pushed (default: master):" -t 7  localbranchname
-echo 
+echo
 read -p "please input remote branch name pushed (default: master):" -t 7 remotebranchname
-echo 
+echo
 if [ ! $hostname ]
-then 
+then
 	hostname="origin"
 fi
 if [ ! $localbranchname ]
-then 
+then
 	localbranchname="master"
 fi
 if [ ! $remotebranchname ]
-then 
+then
 	remotebranchname="master"
 fi
 if [ ! $COND ]
