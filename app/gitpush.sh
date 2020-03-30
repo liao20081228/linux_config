@@ -121,7 +121,7 @@ then
 fi
 
 if [ ! $comment ]
-then 
+then
 	comment="$(date)"
 fi
 git commit --signoff -m "$comment"
@@ -150,14 +150,14 @@ then
 fi
 if [ ! $COND ]
 then
-       COND="yes"	
+       COND="yes"
 fi
 
-if [ $COND = "yes" -o $COND = "y" -o $COND = "ye" -o $COND = "YES" -o $COND = "YE" -o $COND = "Y"  ] 
+if [ $COND = "yes" -o $COND = "y" -o $COND = "ye" -o $COND = "YES" -o $COND = "YE" -o $COND = "Y"  ]
 then
 	temp=$(basename $gitdir)
 	if [ -z "$(echo $(git remote -v) | grep gitee.com)" ]
-	then 
+	then
 		git remote set-url --add $hostname git@gitee.com:liao20081228/$temp.git 
 	fi
 	if [ -z "$(echo $(git remote -v) | grep github.com)" ]
