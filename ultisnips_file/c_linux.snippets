@@ -1,0 +1,233 @@
+###########################################################################
+#                            TextMate Snippets                            #
+###########################################################################
+
+priority 1
+
+#条件编译命令部分
+snippet "#?inc(?:l|lu|lud|lude)?$" "#include" brms
+#include<${1:stdio.h}>
+endsnippet 
+
+snippet "#?linc(?:l|lu|lud|lude)?$" "#include" brms
+#include"${1:stdio.h}"
+endsnippet 
+
+
+
+
+snippet "#?if?nd(?:e|ef)?$" "#ifndef ... #define ... #endif" brms
+#ifndef ${1/(\w+)\s?\w*/$1/}
+#define ${1:macro}
+#endif /* ifndef ${1/(\w+)\s?\w*/$1/} */
+endsnippet
+
+snippet #if "#if #endif" bms
+#if ${1:0}
+	${VISUAL}$0
+#endif  /* #if $1 */
+endsnippet
+
+snippet "#?if?d(?:e|ef)?$" "#ifdef XX  #endif" brms
+#ifdef ${1:macro}
+$0
+#endif /* #ifdef $1 */
+endsnippet
+
+snippet once "Include header once only guard" bms
+#pragma once
+#ifndef ${1:macro}
+#define $1
+$0
+#endif /* end of include guard: $1 */
+endsnippet
+
+snippet "#?def(?:i|in|ine)?$" "#define ..." brms
+#define ${0:macro}
+endsnippet
+
+snippet "#?und(?:e|ef)?$" "#ifdef...#undef...#endif" brms
+#ifdef ${1:macro}
+#undef $1 
+$0
+#endif /*#ifdef $1 */
+endsnippet
+
+#系统关键字部分
+snippet main "main() (main)" bms
+int main(int argc, char *argv[])
+{
+	${0:/*function_body*/}
+	return 0;
+}
+endsnippet
+
+snippet "noma(?:i|in)?$" "main(void) (main)" brms
+int main(void)
+{
+	${0:/*function_body*/}
+	return 0;
+}
+endsnippet
+
+snippet for "for loop (for)" bms
+for (${2:i} = ${3:0}; $2 < ${1:count}; ${4:++$2}) 
+{
+	${0:/*function_body*/}
+}
+endsnippet
+
+snippet fori "for int loop (fori)" bms
+for (${4:int} ${2:i} = ${5:0}; $2 < ${1:count}; ${3:++$2}) 
+{
+	${0:/*function_body*/}
+}
+endsnippet
+
+snippet elif "else if .. (eli)" bms
+else if (${1:/* condition */}) 
+{
+	${0:/*function_body*/}
+}
+endsnippet
+
+snippet if "if() {}" bms
+if (${1:/*condition*/})
+{
+	${0:/*function_body*/}
+}
+endsnippet
+
+snippet el "else {}" bms
+else 
+{
+	${0:/*function_body*/}
+}
+endsnippet
+
+snippet ifel "if() {}else {}" bms
+if (${1:/*condition*/})
+{
+	${2:/*function_body*/}
+}
+else
+{
+	${0:/*function_body*/}
+}
+endsnippet
+
+snippet while "while" bms
+while (${1:/*condition*/})
+{
+	${0:/*function_body*/}
+}
+endsnippet
+
+snippet do "do {}while" bms
+do
+{
+	${0:/*function_body*/}
+} while(${1:/*condition*/});
+endsnippet
+
+snippet switch "switch" bms
+switch (${1:/*expretion*/})
+{
+	case ${2:/*value*/} : 
+		${3:/*sentence*/}; 
+		break;
+	default : 
+		${0:/* sentence */}; 
+		break;
+}
+endsnippet
+
+snippet case "case" bms
+case ${1:/*value*/} : 
+	${2:/*sentence*/}; 
+	break;
+endsnippet
+
+snippet st "struct" bms
+typedef struct ${1:/*struct name*/} 
+{
+	${2:/* data */}
+}$0;
+endsnippet
+
+snippet un "union" bms
+typedef union ${1:/* union_name*/} 
+{
+	${2:/* data */}
+}$0;
+
+endsnippet
+
+snippet en "enum" bms
+typedef enum ${1:/* enum_name */} 
+{
+	${2:/* data */}
+}$0;
+endsnippet
+
+
+snippet "ret(?:urn|run|u|ur|)?" "return 0;" brms
+return ${1:0};$0
+endsnippet
+
+#注释
+
+snippet cfile "文件头注释;" bms
+/*!@file
+********************************************************************************
+Module Name    : ${1:<module nam>}
+File Name      : ${2:<file name>}
+Related Files  : ${3:<other files related to this file>} 
+File Function  : ${4:<Describe the main function of the file implementation}
+Author         : ${5:<author name>}
+Department     : ${6:<author department>}
+Email          : ${7:xxx@xxx}
+Version        : ${8:<current version number>}
+--------------------------------------------------------------------------------
+Note           : ${9:<Other instructions>}
+--------------------------------------------------------------------------------
+Date:          : ${10:YYYY/MM/DD}
+Version:       : ${11:X.Y}
+Modifier       : ${12:<xxx>}
+Department     : ${13:<xxx>}
+Email          : ${14:xxx@xxx}
+Changes        : ${15:changes}
+*******************************************************************************/
+endsnippet
+
+
+snippet cfun "函数注释;" bms
+/*!@function
+********************************************************************************
+Function Name  : ${1:<function name>}
+Function       : ${2:<function implementation function>}
+Parameters     : ${3:<parameter class table and description (if any), format:>
+                 [IN | OUT] Parameter 1: Parameter description
+                 [IN | OUT] Parameter 2: Parameter Description
+                 ...}
+Return Value   : ${4:<Meaning of the return value of the function (if any)>}
+Throw exception: ${5:<may throw an exception and its description (if any) in the format:>
+                 Type 1: Description
+                 Type 2: Description
+                 ...}
+--------------------------------------------------------------------------------
+Note           : ${6:<Other Considerations (if any)>}
+Typical usage  : ${7:<If function is complex or special, give typical code example>}
+--------------------------------------------------------------------------------
+Date:          : ${8:YYYY/MM/DD}
+Version:       : ${9:X.Y}
+Author         : ${10:<xxx>}
+Department     : ${11:<xxx>}
+Email          : ${12:xxx@xxx}
+Modifier       : ${13:<xxx>}
+Department     : ${14:<xxx>}
+Email          : ${15:xxx@xxx}
+Changes        : ${16:changes}
+*******************************************************************************/
+endsnippet
+# vim:ft=snippets:

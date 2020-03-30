@@ -1,0 +1,1 @@
+*/6 * * * * ~/Downloads/linux_config/app/auto_sync_repository.sh 

@@ -1,0 +1,175 @@
+#########################################################################
+# File Name: git.sh
+# Author: ma6174
+# mail: liao20081228@126.com
+# Created Time: 2017年04月03日 星期一 17时34分53秒
+#########################################################################
+#!/bin/bash
+function display_split_line()
+{
+	if [ ! "$2" ]
+	then
+		echo -e "\033[31;1m $1 \033[0m"
+		return 0 
+	fi
+	local i=0
+	local total=118
+	local arglen=$(expr length "$*")
+	local len=$(($total - $arglen))
+	local reset=$(($len % 2))
+	
+	if [ $reset == 0 ]
+	then
+		local  len1=$(expr $len / 2)
+		local  len2=$len1
+	else
+		local  len1=$(expr $len / 2)
+		local  len2=$(expr $len1 + 1)
+	fi
+	for ((i=0 ;i < $len1; i++))
+	do
+		echo -n "#"
+	done
+	echo -en "\033[31;1m $* \033[0m"
+	for ((i=0 ;i < $len2; i++))
+	do
+		echo -n "#"
+	done
+	echo ""
+}
+
+curdir=$PWD
+
+if [ $# -eq 0 -o "$1" == "-rm" ]
+then
+	gitdir=$PWD
+
+else
+	gitdir=$1
+	if [ $1=. ]
+	then
+		gitdir=$PWD
+	fi
+fi
+
+if [ -d $gitdir ]
+then 
+	cd $gitdir
+	if [ ! -d ./.git ]
+	then
+		echo "error: \"$gitdir\" is not a git repository !"
+		cd $curdir
+		exit 1
+	fi
+else
+	echo "error: \"$gitdir\" is not existence !"
+	exit 1
+fi
+
+display_split_line "start sync git repository: $gitdir" "yes"
+if [ "$2" == "-rm" -a $# -gt 2 ]
+then
+	display_split_line "remove files"
+	for rmfile in $@
+	do
+		display_split_line $rmfile
+		if [ -e $rmfile -a $rmfile != $1 -a $rmfile != $2  -a $rmfile != "." -a $rmfile != ".." ]
+		then 
+			git rm $rmfile -r
+			rm -r $rmfile
+		fi
+	done
+elif [ "$1" == "-rm" -a $# -gt 1 ]
+then
+	display_split_line "remove files"
+	for rmfile in $@
+	do
+		display_split_line $rmfile
+		if [ -e $rmfile -a $rmfile != $1 -a $rmfile != "." -a $rmfile != ".." ]
+		then 
+			git rm $rmfile -r
+			rm -r $rmfile 
+		fi
+	done
+fi
+
+display_split_line "get the current status of repository"
+git status
+
+display_split_line "add files to cache"
+git add *
+
+display_split_line "get the current status of repository"
+git status
+if [ "$(git status|grep "nothing to commit, working tree clean")" ]
+then 
+	display_split_line "end sync git repository: $gitdir" "yes"
+	exit 0
+fi
+
+display_split_line "commit the files in cache to current local repository"
+read -p "use the custom comments?(default: no)" -t 7 COND
+echo 
+if [ ! $COND ]
+then
+       COND="no"
+fi
+
+if [ $COND = "yes" -o $COND = "y" -o $COND = "ye" -o $COND = "YES" -o $COND = "YE" -o $COND = "Y"  ] 
+then
+	read -p "please input custom commentse:" comment
+fi
+
+if [ ! $comment ]
+then 
+	comment="$(date)"
+fi
+git commit --signoff -m "$comment"
+
+display_split_line "push local repository to remote repository"
+COND=""
+read -p "multiple remote repositories synchronization?(default: yes)" -t 7 COND
+echo 
+read -p "please input hostname pushed (default: origin):" -t 7  hostname
+echo 
+read -p "please input local branch name pushed (default: master):" -t 7  localbranchname
+echo 
+read -p "please input remote branch name pushed (default: master):" -t 7 remotebranchname
+echo 
+if [ ! $hostname ]
+then 
+	hostname="origin"
+fi
+if [ ! $localbranchname ]
+then 
+	localbranchname="master"
+fi
+if [ ! $remotebranchname ]
+then 
+	remotebranchname="master"
+fi
+if [ ! $COND ]
+then
+       COND="yes"	
+fi
+
+if [ $COND = "yes" -o $COND = "y" -o $COND = "ye" -o $COND = "YES" -o $COND = "YE" -o $COND = "Y"  ] 
+then
+	temp=$(basename $gitdir)
+	if [ -z "$(echo $(git remote -v) | grep gitee.com)" ]
+	then 
+		git remote set-url --add $hostname git@gitee.com:liao20081228/$temp.git 
+	fi
+	if [ -z "$(echo $(git remote -v) | grep github.com)" ]
+	then 
+		git remote set-url --add $hostname git@github.com:liao20081228/$temp.git 
+	fi
+	if [ -z "$(echo $(git remote -v) | grep gitlab.com)" ]
+	then 
+		git remote set-url --add $hostname git@gitlab.com:liao20081228/$temp.git 
+	fi
+fi
+
+git push $hostname $localbranchname:$remotebranchname
+display_split_line "end sync git repository: $gitdir" "yes"
+cd $curdir
