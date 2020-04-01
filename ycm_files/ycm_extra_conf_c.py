@@ -58,6 +58,8 @@ flags = [
 '-x',
 'c',
 '-isystem',
+'/usr/include/linux',
+'-isystem',
 '/usr/include/x86_64-linux-gnu',
 '-isystem',
 '/usr/include',
