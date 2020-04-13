@@ -43,7 +43,6 @@ curdir=$PWD
 if [ $# -eq 0  ]
 then
 	gitdir=$PWD
-
 else
 	gitdir=$1
 	if [ "$1" == "." ]
@@ -55,23 +54,24 @@ fi
 function lookup_gitdir()
 {
 	cd $1
-	if [ ! -d ./.git -a ]
+	if [ -d ./.git ]
 	then
-		echo "error: \"$gitdir\" is not a git repository !"
-		cd $curdir
-		exit 1
+		return 0
+	else
+		if [ "$PWD" == "/" ]
+		then
+			echo "error: \"$gitdir\" is not a git repository !"
+			cd $curdir
+			exit 1
+		else
+			lookup_gitdir ./..
+		fi
 	fi
 }
 
 if [ -d $gitdir ]
 then
-	cd $gitdir
-	if [ ! -d ./.git ]
-	then
-		echo "error: \"$gitdir\" is not a git repository !"
-		cd $curdir
-		exit 1
-	fi
+	lookup_gitdir  $gitdir
 else
 	echo "error: \"$gitdir\" is not existence !"
 	exit 1
