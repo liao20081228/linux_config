@@ -16,13 +16,12 @@ then
 fi
 VER=$MAJ_VER-$MIN_VER
 
-DISTRI=$(lsb_release -is | tr 'A-Z' 'a-z')
-DISTRI_VER=$(lsb_release -sr)
-
+OS_DISTRI=$(lsb_release -is | tr 'A-Z' 'a-z')
+OS_DISTRI_VER=$(lsb_release -sr)
 ARCH=$(uname -i)
 EXTENTION=tgz
-PACKAGE="$DRIVER"_"$OS"-$VER-$DISTRI$DISTRI_VER-$ARCH
-PACKAGE_NAME=$PACKAGE.$EXTENTION
+PACKAGE="$DRIVER"_"$OS"-$VER-"$OS_DISTRI""$OS_DISTRI_VER"-"$ARCH"
+PACKAGE_NAME="$PACKAGE"."$EXTENTION"
 URL_PRE=http://content.mellanox.com/ofed
 if [ ! -e ./$PACKAGE_NAME ]
 then
@@ -45,6 +44,7 @@ then
 		sudo ./uninstall.sh
 	fi
 fi
+
 
 sudo ./mlnxofedinstall --basic --upstream-libs --without-rshim-dkms \
 	--without-iser-dkms --without-isert-dkms --without-srp-dkms \
