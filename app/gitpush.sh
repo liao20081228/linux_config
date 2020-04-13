@@ -64,7 +64,7 @@ function lookup_gitdir()
 			cd $curdir
 			exit 1
 		else
-			lookup_gitdir ./..
+			lookup_gitdir ..
 		fi
 	fi
 }
