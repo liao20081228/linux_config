@@ -1,7 +1,7 @@
 #!/bin/bash
 cd $HOME
 DRIVER=MLNX_OFED
-OS=LINUX
+OS=$(uname | tr 'a-z' 'A-Z')
 read -p "input major version(default 5.0):" -t 7 MAJ_VER
 echo
 read -p "input minor version(default 2.1.8.0):" -t 7 MIN_VER
@@ -15,8 +15,10 @@ then
 	MIN_VER=2.1.8.0
 fi
 VER=$MAJ_VER-$MIN_VER
+
 DISTRI=$(lsb_release -is | tr 'A-Z' 'a-z')
 DISTRI_VER=$(lsb_release -sr)
+
 ARCH=$(uname -i)
 EXTENTION=tgz
 PACKAGE="$DRIVER"_"$OS"-$VER-$DISTRI$DISTRI_VER-$ARCH
@@ -26,11 +28,14 @@ if [ ! -e ./$PACKAGE_NAME ]
 then
 	wget $URL_PRE/$DRIVER-$VER/$PACKAGE_NAME
 fi
+
 if [ ! -e ./$PACKAGE ]
 then
 	tar -xf ./$PACKAGE_NAME
 fi
+
 cd ./$PACKAGE
+
 if [ -e /etc/init.d/openibd ]
 then
 	sudo /etc/init.d/openibd stop
