@@ -40,7 +40,7 @@ function display_split_line()
 
 curdir=$PWD
 
-if [ $# -eq 0 -o "$1" == "-rm" ]
+if [ $# -eq 0  ]
 then
 	gitdir=$PWD
 
@@ -51,6 +51,17 @@ else
 		gitdir=$PWD
 	fi
 fi
+
+function lookup_gitdir()
+{
+	cd $1
+	if [ ! -d ./.git -a ]
+	then
+		echo "error: \"$gitdir\" is not a git repository !"
+		cd $curdir
+		exit 1
+	fi
+}
 
 if [ -d $gitdir ]
 then
@@ -67,31 +78,6 @@ else
 fi
 
 display_split_line "start sync git repository: $gitdir" "yes"
-if [ "$2" == "-rm" -a $# -gt 2 ]
-then
-	display_split_line "remove files"
-	for rmfile in $@
-	do
-		display_split_line $rmfile
-		if [ -e $rmfile -a $rmfile != $1 -a $rmfile != $2  -a $rmfile != "." -a $rmfile != ".." ]
-		then 
-			git rm $rmfile -r
-			rm -r $rmfile
-		fi
-	done
-elif [ "$1" == "-rm" -a $# -gt 1 ]
-then
-	display_split_line "remove files"
-	for rmfile in $@
-	do
-		display_split_line $rmfile
-		if [ -e $rmfile -a $rmfile != $1 -a $rmfile != "." -a $rmfile != ".." ]
-		then 
-			git rm $rmfile -r
-			rm -r $rmfile 
-		fi
-	done
-fi
 
 if [ "$(git status|grep "nothing to commit, working tree clean")" ]
 then
