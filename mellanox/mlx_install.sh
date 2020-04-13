@@ -5,8 +5,8 @@ OS=LINUX
 MAX_VER=5.0
 MIN_VER=2.1.8.0
 VER=$MAX_VER-$MIN_VER
-DISTRI=ubuntu
-DISTRI_VER=18.04
+DISTRI=$(lsb_release -is | tr 'A-Z' 'a-z')
+DISTRI_VER=$(lsb_release -sr)
 ARCH=$(uname -i)
 EXTENTION=tgz
 PACKAGE="$DRIVER"_"$OS"-$VER-$DISTRI$DISTRI_VER-$ARCH
@@ -37,4 +37,4 @@ sudo ./mlnxofedinstall --basic --upstream-libs --without-rshim-dkms \
 sudo /etc/init.d/openibd restart
 ofed_info
 sudo rm -r $HOME/$PACKAGE
-sudo rm -r $HOME/$PACKAGE_NAME
+#sudo rm -r $HOME/$PACKAGE_NAME
