@@ -33,7 +33,7 @@ fi
 
 sudo ./mlnxofedinstall --basic --upstream-libs --without-rshim-dkms \
 	--without-iser-dkms --without-isert-dkms --without-srp-dkms \
-	--without-srptools --with-perftest --force
+	--without-srptools --with-perftest --without-nfsrdma --force
 sudo /etc/init.d/openibd restart
 ofed_info
 sudo rm -r $HOME/$PACKAGE
