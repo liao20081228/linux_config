@@ -2,13 +2,18 @@
 cd $HOME
 DRIVER=MLNX_OFED
 OS=LINUX
-
-read -p "input major version" -t 7 MAJ_VER
-read -p "input minor version" -t 7 MIN_VER
-
-MAJ_VER=5.0
-MIN_VER=2.1.8.0
-
+read -p "input major version(default 5.0):" -t 7 MAJ_VER
+echo
+read -p "input minor version(default 2.1.8.0):" -t 7 MIN_VER
+echo
+if [ -z "$MAJ_VER" ]
+then
+	MAJ_VER=5.0
+fi
+if [ -z "$MIN_VER"]
+then
+	MIN_VER=2.1.8.0
+fi
 VER=$MAJ_VER-$MIN_VER
 DISTRI=$(lsb_release -is | tr 'A-Z' 'a-z')
 DISTRI_VER=$(lsb_release -sr)
